@@ -1,0 +1,34 @@
+<!-- FORM -->
+
+<!-- form -->
+<form asp-action="Create" method="post|get">
+
+<!-- Select  -->
+<select asp-for="AuthorId" class ="form-control" asp-items="ViewBag.AuthorId"></select>
+<!-- select  controller -->
+viewData["AuthorId"] = new SelectList(_context.Author, "Id", "Name");
+
+<!-- Label -->
+<label asp-for=Firstname">Any Text</label>
+
+<!-- input  -->
+<input asp-for="Title" class="form-control" />
+
+<!-- validation -->
+<span asp-validation-for="LastName"></span> <!-- it will be shown only when lastName validation failed -->
+
+<!-- END FORM -->
+
+
+<!-- Link -->
+<a asp-controller="HomewController" asp-action="Index" asp-route-id="@item.Id">Index</a>
+
+
+<!-- After submition | in the controller -->
+@{
+    if (ModelState.isValid) {
+        // do somthing
+    }
+    ModelState.AddModelError("", "You can't do that"); // optional
+    return View(theFormData);
+}
