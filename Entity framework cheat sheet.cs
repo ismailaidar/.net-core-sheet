@@ -76,27 +76,11 @@ services.AddScoped<IModelRepository, IModelRepositoryImp>();
 
 
 ////// Relationships /////////
-// manyToMany
-public class Student
-{
-    public int StudentId { get; set; }
-    public IList<StudentCourse> StudentCourses { get; set; }
-}
-public class Course
-{
-    public int CourseId { get; set; }
-    public IList<StudentCourse> StudentCourses { get; set; }
-}
-public class StudentCourse
-{
-    public int StudentId { get; set; }
-    public Student Student { get; set; }
-    public int CourseId { get; set; }
-    public Course Course { get; set; }
-}
-# in dbContext class
-protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
-    modelBuilder.Entity<StudentCourse>().HasKey(sc => new { sc.StudentId, sc.CourseId });
-}
-public DbSet<StudentCourse> StudentCourses { get; set; }
+
+//one to many exception:
+//A possible object cycle was detected which is not supported. This can either be due to a cycle or if the object depth is larger than the maximum allowed depth of 32.
+.NET Core 3.1 Install the package Microsoft.AspNetCore.Mvc.NewtonsoftJson
+//Startup.cs Add service
+services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
